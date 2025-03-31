@@ -2,20 +2,20 @@
     "name": "amador PWA",
     "short_name": "amador",
     "description": "amador Progressive Web App",
-    "start_url": "/amador/",
-    "scope": "/amador/",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#FFFFFF",
     "theme_color": "#FFFFFF",
     "icons": [
         {
-            "src": "/amador/icon-192x192.png",
+            "src": "/icon-192x192.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "/amador/icon-512x512.png",
+            "src": "/icon-512x512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
