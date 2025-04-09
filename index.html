@@ -97,5 +97,51 @@
         });
     }
     </script>
+    <script>
+  function updateFaviconWithDay() {
+    const day = new Date().getDate();
+
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+
+    const ctx = canvas.getContext('2d');
+
+    // Colores según modo
+    const bgColor = isDarkMode ? '#111' : '#fff';
+    const textColor = isDarkMode ? '#fff' : '#000';
+
+    // Dibujar fondo
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dibujar texto
+    ctx.fillStyle = textColor;
+    ctx.font = 'bold 36px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(day, canvas.width / 2, canvas.height / 2);
+
+    const faviconURL = canvas.toDataURL('image/png');
+
+    let link = document.querySelector("link[rel~='icon']");
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.href = faviconURL;
+  }
+
+  window.addEventListener('load', () => {
+    updateFaviconWithDay();
+
+    // Escuchar cambios de modo oscuro/claro en tiempo real
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFaviconWithDay);
+  });
+</script>
+
 </body>
 </html>
