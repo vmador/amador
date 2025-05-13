@@ -44,11 +44,11 @@
     </style>
 </head>
 <body>
-    <iframe id="framerContent" src="https://amadorcampos.framer.website" allowfullscreen allow="geolocation; camera; microphone; storage-access"></iframe>
+    <iframe id="framerContent" src="https://amador.framer.website" allowfullscreen allow="geolocation; camera; microphone; storage-access"></iframe>
     <script>
     function sendMessageToIframe(message) {
         const iframe = document.getElementById('framerContent');
-        iframe.contentWindow.postMessage(message, 'https://amadorcampos.framer.website');
+        iframe.contentWindow.postMessage(message, 'https://amador.framer.website');
     }
     
     window.addEventListener('message', function(event) {
