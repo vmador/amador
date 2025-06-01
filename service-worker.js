@@ -1,10 +1,10 @@
 const CACHE_NAME = 'amador-pwa-cache-v2';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/icon-192x192.png',
-    '/icon-512x512.png'
+    '/amador/',
+    '/amador/index.html',
+    '/amador/manifest.json',
+    '/amador/icon-192x192.png',
+    '/amador/icon-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -12,7 +12,8 @@ self.addEventListener('install', (event) => {
         caches.open(CACHE_NAME)
             .then((cache) => {
                 console.log('Opened cache');
-                return cache.addAll(urlsToCache);})
+                return cache.addAll(urlsToCache);
+            })
     );
 });
 
