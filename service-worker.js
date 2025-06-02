@@ -1,10 +1,10 @@
 const CACHE_NAME = 'amador-pwa-cache-v2';
 const urlsToCache = [
-    '/amador/',
-    '/amador/index.html',
-    '/amador/manifest.json',
-    '/amador/icon-192x192.png',
-    '/amador/icon-512x512.png'
+    '/',
+    '/index.html',
+    '/manifest.json',
+    '/icon-192x192.png',
+    '/icon-512x512.png'
 ];
 
 self.addEventListener('install', (event) => {
