@@ -4,16 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>amador</title>
+    <meta name="description" content="Design Engineer from a tropical rich coast">
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" sizes="192x192" href="/amador/icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/amador/icon-512x512.png">
-    <link rel="apple-touch-icon" href="/amador/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512x512.png">
+    <link rel="apple-touch-icon" href="/icon-192x192.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#FFFFFF">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="amador">
-    <meta name="description" content="amador">
+    <meta property="og:title" content="amador">
+    <meta property="og:description" content="Design Engineer from a tropical rich coast">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:url" content="https://amador.framer.website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="amador">
+    <meta name="twitter:description" content="Design Engineer from a tropical rich coast">
+    <meta name="twitter:image" content="/social-preview.png">
     
     <style>
         body, html { 
@@ -22,6 +30,22 @@
             height: 100%; 
             overflow: hidden; 
             background-color: #FFFFFF; 
+        }
+        iframe { 
+            width: 100lvw; 
+            height: 100lvh; 
+            border: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+        }
+        @supports(padding: max(0px)) {
+            body, iframe { 
+                padding-top: env(safe-area-inset-top); 
+                height: calc(100lvh - env(safe-area-inset-top)); 
+            }
         }
         iframe { 
             width: 100lvw; 
@@ -74,17 +98,49 @@
     </style>
 </head>
 <body>
-    <iframe id="framerContent" src="https://amador.framer.website" allowfullscreen allow="geolocation; camera; microphone; storage-access"></iframe>
+    <iframe id="framerContent" src="https://amador.framer.website/" allowfullscreen allow="geolocation; camera; microphone; storage-access"></iframe>
     
-    
+      <script>
+    // Actualiza el favicon con el día del mes, respetando modo claro/oscuro
+    function updateFaviconWithDay() {
+      const day = new Date().getDate();
+      const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const canvas = document.createElement('canvas');
+      canvas.width = 64;
+      canvas.height = 64;
+      const ctx = canvas.getContext('2d');
+      const bgColor = isDarkMode ? '#111' : '#fff';
+      const textColor = isDarkMode ? '#fff' : '#000';
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = textColor;
+      ctx.font = 'bold 36px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(day, canvas.width / 2, canvas.height / 2);
+      const faviconURL = canvas.toDataURL('image/png');
+      let link = document.querySelector("link[rel~='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'icon';
+        document.head.appendChild(link);
+      }
+      link.href = faviconURL;
+    }
+
+    window.addEventListener('load', () => {
+      updateFaviconWithDay();
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFaviconWithDay);
+    });
+  </script>
     <script>
     function sendMessageToIframe(message) {
         const iframe = document.getElementById('framerContent');
-        iframe.contentWindow.postMessage(message, 'https://amador.framer.website');
+        iframe.contentWindow.postMessage(message, 'https://amador.framer.website/');
     }
     
     window.addEventListener('message', function(event) {
-        if (event.origin !== "https://amador.framer.website") return;
+        if (event.origin !== "https://amador.framer.website/") return;
         
         if (event.data.type === 'setSessionData') {
             localStorage.setItem('sessionData', JSON.stringify(event.data.sessionData));
@@ -121,10 +177,10 @@
 
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/amador/service-worker.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                // Registration successful
             }, function(err) {
-                console.log('ServiceWorker registration failed: ', err);
+                // Registration failed
             });
         });
     }
